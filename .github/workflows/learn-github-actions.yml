@@ -1,0 +1,29 @@
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning Github actions
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - develop
+      - feature/.*
+  pull_request:
+
+jobs:
+  Environment-preparation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.13.x
+          cache: npm
+
+      - name: Install 
+        run: yarn
+      
+      - name: Run-Tests
+        run: yarn test
